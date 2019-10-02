@@ -41,7 +41,7 @@ public class OP_100  extends OPStreategyEX{
                 if(snack!= null){
                     tempJson = JSONObject.fromObject(opObject.get("message").toString());
                    // System.out.println(tempJson.toString());
-                    snack.updatePosition(tempJson);
+                    snack.updateDir(tempJson);
                 }else
                 {
                    // System.out.println("该snack为空");

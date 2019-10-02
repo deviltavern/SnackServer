@@ -9,6 +9,7 @@ import net.sf.json.JSONObject;
 public class GlutonSnack {
 
     WebSocketServerHandler handler;
+    Vector3 dir;
     Vector3 position;
     String snackID;
     String bodyMessage = "";
@@ -17,27 +18,37 @@ public class GlutonSnack {
         System.out.println("构造的ID = "+han.ID);
         snackID = han.ID;
         position = new Vector3();
+        dir = new Vector3();
+        position = new Vector3();
 
     }
-    public void updatePosition(JSONObject posObj){
 
-        Vector3 tempPos = new Vector3();
+    public  void  updateDir(JSONObject posObj) {
 
-        tempPos.x = new Float(posObj.get("x").toString());
-        tempPos.y = new Float(posObj.get("y").toString());
-        tempPos.z = new Float(posObj.get("z").toString());
-        position.x += tempPos.x;
-        position.y += tempPos.y;
-        position.z += tempPos.z;
+        dir.x = new Float(posObj.get("x").toString());
+        dir.y = new Float(posObj.get("y").toString());
+        dir.z = new Float(posObj.get("z").toString());
 
         bodyMessage = posObj.get("bodyMsg").toString();
+
+
+    }
+    public void updatePosition(){
+
+
+        position.x += dir.x;
+        position.y += dir.y;
+        position.z += dir.z;
+
+
         //System.out.println("输出 = "+bodyMessage);
 
     }
 
     public JSONObject toVecJSON(){
-        JSONObject reObj = new JSONObject();
 
+        updatePosition();
+        JSONObject reObj = new JSONObject();
         reObj.put("snackID",snackID);
         reObj.put("vec",position.toJson());
         reObj.put("bodyMsg",bodyMessage);
