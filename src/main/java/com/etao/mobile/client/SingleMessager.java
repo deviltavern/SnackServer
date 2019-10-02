@@ -21,9 +21,9 @@ public class SingleMessager {
             so.put("message",object);
 
             handler.context.getChannel().write(new TextWebSocketFrame(so.toString()));
-            tempDate = new Date().getTime() - lastTime.getTime();
-            System.out.println(tempDate);
-            lastTime = new Date();
+           // tempDate = new Date().getTime() - lastTime.getTime();
+            //System.out.println(tempDate);
+           // lastTime = new Date();
 
 
         }

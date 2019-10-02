@@ -48,7 +48,7 @@ public class STimer extends TimerTask {
 
         Timer timer = new Timer("我的定时器");           // 创建一个定时器
         STimer myTimerTask = new STimer();
-        timer.schedule(myTimerTask, 100, 20);    //10秒后执行，周期为2秒
+        timer.schedule(myTimerTask, 100, 5);    //10秒后执行，周期为2秒
       //  handler.chan
     }
 }
