@@ -10,12 +10,14 @@ import org.jboss.netty.handler.codec.http.websocketx.PongWebSocketFrame;
 import org.jboss.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import org.omg.CORBA.PUBLIC_MEMBER;
 
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class STimer extends TimerTask {
 
-
+    Date lastDate;
+    float midDate;
     @Override
     public void run() {
 
@@ -29,6 +31,7 @@ public class STimer extends TimerTask {
                 //SingleMessager.send(handler,100,201,ob);
 
                 SingleMessager.send(handler,100,203, GlutonChatMap.getAllSnackPosition());
+
             }
 
         }catch (Exception es){
