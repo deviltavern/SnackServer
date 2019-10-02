@@ -9,12 +9,16 @@ public class SingleMessager {
 
     public static void send(WebSocketServerHandler handler,int mainCode,int subCode, Object object){
 
-        JSONObject so = new JSONObject();
-        so.put("main_code",mainCode);
-        so.put("sub_code",subCode);
-        so.put("message",object);
+        if (handler.context.getChannel().isWritable() == true){
 
-        handler.context.getChannel().write(new TextWebSocketFrame(so.toString()));
+            JSONObject so = new JSONObject();
+            so.put("main_code",mainCode);
+            so.put("sub_code",subCode);
+            so.put("message",object);
+
+            handler.context.getChannel().write(new TextWebSocketFrame(so.toString()));
+
+        }
 
 
 

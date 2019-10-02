@@ -48,6 +48,13 @@ public class OP_100  extends OPStreategyEX{
                 }
                 break;
 
+            case 204:
+
+                tempJson = JSONObject.fromObject(opObject.get("message").toString());
+
+                BroadCastMessage.broadCast(100,204,tempJson);
+                break;
+
         }
     }
 }

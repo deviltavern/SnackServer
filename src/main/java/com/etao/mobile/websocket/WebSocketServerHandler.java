@@ -13,6 +13,7 @@ import com.etao.mobile.glutton.GlutonChatMap;
 import com.etao.mobile.op.OPStrategy;
 import com.etao.mobile.op.OP_0;
 import com.etao.mobile.op.OP_100;
+import com.etao.mobile.op.OP_101;
 import com.sun.org.apache.bcel.internal.generic.RET;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -100,67 +101,64 @@ public class WebSocketServerHandler extends SimpleChannelUpstreamHandler {
     public void messageReceived(ChannelHandlerContext ctx, MessageEvent e) throws Exception {
         Object msg = e.getMessage();
        // System.out.println(msg);
+        try{
 
-        if (msg instanceof HttpRequest) {
-            handleHttpRequest(ctx, (HttpRequest) msg);
-        } else if (msg instanceof WebSocketFrame) {
+            if (msg instanceof HttpRequest) {
+
+                HttpRequest rxq = (HttpRequest) msg;
+                System.out.println(rxq);
+                handleHttpRequest(ctx, rxq);
+                //handleWebSocketFrame(ctx,(WebSocketFrame)msg);
+            } else if (msg instanceof WebSocketFrame) {
 
 
-            try{
-                WebSocketFrame rq = (WebSocketFrame)msg;
-                // System.out.println(rq.getBinaryData());
-                ChannelBuffer buffer = rq.getBinaryData();
-                byte[] req = new byte[buffer.readableBytes()];
-                buffer.readBytes(req);
-                String getValue = new String(req);
-               // System.out.println(getValue);
-                //System.out.println(getValue);
-                OPStrategy opStrategy = null;
-                JSONObject object = JSONObject.fromObject(getValue);
-               // System.out.println("JSONd对象 = "+object.toString());
+                try{
+                    WebSocketFrame rq = (WebSocketFrame)msg;
+                    // System.out.println(rq.getBinaryData());
+                    ChannelBuffer buffer = rq.getBinaryData();
+                    byte[] req = new byte[buffer.readableBytes()];
+                    buffer.readBytes(req);
+                    String getValue = new String(req);
+                    // System.out.println(getValue);
+                    //System.out.println(getValue);
+                    OPStrategy opStrategy = null;
+                    JSONObject object = JSONObject.fromObject(getValue);
+                     //System.out.println("JSONd对象 = "+object.toString());
 
-                switch (new Integer(object.get("main_code").toString())) {
-                    case 0:
-                        opStrategy = new OP_0(this);
-                        break;
+                    switch (new Integer(object.get("main_code").toString())) {
+                        case 0:
+                            opStrategy = new OP_0(this);
+                            break;
 
-                    case 100:
-                        opStrategy = new OP_100(this);
-                        break;
-                    default:
-                        break;
+                        case 100:
+                            opStrategy = new OP_100(this);
+                            break;
+
+                        case 101:
+                            opStrategy = new OP_101(this);
+                            break;
+                        default:
+                            break;
+                    }
+                    if(opStrategy!= null){
+                        //  System.out.println(new Integer(object.get("main_code").toString()));
+                        opStrategy.doSomething(object);
+                    }
+
+                }catch (Exception es){
+
+                    System.out.println("输出异常!");
+
+
                 }
-            if(opStrategy!= null){
-              //  System.out.println(new Integer(object.get("main_code").toString()));
-                opStrategy.doSomething(object);
+
             }
-
-           }catch (Exception es){
-
-               System.out.println("输出异常!");
+        }catch (Exception fs){
 
 
-           }
-
-         //  JSONArray objectArray = JSONArray.fromObject(getValue);
-         //  JSONObject object = objectArray.getJSONObject(0);
-         //  System.out.println("json值 = "+object.get("main_code"));
-         // switch (new Integer(object.get("main_code").toString())){
-         //     case 0:
-         //         opStrategy = new OP_0(this);
-         //         break;
-
-         //     default:
-
-         //         break;
-
-         // }
-         // if(opStrategy!= null){
-
-         //     opStrategy.doSomething(object);
-         // }
-         //   handleWebSocketFrame(ctx, (WebSocketFrame) msg);
+            System.out.println("请求异常！");
         }
+
     }
 
     private void handleHttpRequest(ChannelHandlerContext ctx, HttpRequest req) throws Exception {
@@ -195,11 +193,18 @@ public class WebSocketServerHandler extends SimpleChannelUpstreamHandler {
         if (this.handshaker == null) {
             wsFactory.sendUnsupportedWebSocketVersionResponse(ctx.getChannel());
         } else {
-            this.handshaker.handshake(ctx.getChannel(), req);
-            System.out.println(WebSocketServer.recipients.size());
-            WebSocketServer.recipients.add(ctx.getChannel());
-            System.out.println(WebSocketServer.recipients.size());
-            System.out.println(ctx.getChannel().getId());
+            try{
+
+                this.handshaker.handshake(ctx.getChannel(), req);
+                System.out.println(WebSocketServer.recipients.size());
+                WebSocketServer.recipients.add(ctx.getChannel());
+                System.out.println(WebSocketServer.recipients.size());
+                System.out.println(ctx.getChannel().getId());
+            }catch (Exception hankEx){
+                System.out.println("握手失败");
+
+            }
+
         }
     }
 

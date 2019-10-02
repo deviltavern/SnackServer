@@ -11,6 +11,7 @@ public class GlutonSnack {
     WebSocketServerHandler handler;
     Vector3 position;
     String snackID;
+    String bodyMessage = "";
     public GlutonSnack(WebSocketServerHandler han){
 
         System.out.println("构造的ID = "+han.ID);
@@ -19,11 +20,18 @@ public class GlutonSnack {
 
     }
     public void updatePosition(JSONObject posObj){
-        position.x = new Float(posObj.get("x").toString());
-        position.y = new Float(posObj.get("y").toString());
-        position.z = new Float(posObj.get("z").toString());
 
-        //System.out.println("输出 = "+position.toJsonValue());
+        Vector3 tempPos = new Vector3();
+
+        tempPos.x = new Float(posObj.get("x").toString());
+        tempPos.y = new Float(posObj.get("y").toString());
+        tempPos.z = new Float(posObj.get("z").toString());
+        position.x += tempPos.x;
+        position.y += tempPos.y;
+        position.z += tempPos.z;
+
+        bodyMessage = posObj.get("bodyMsg").toString();
+        //System.out.println("输出 = "+bodyMessage);
 
     }
 
@@ -32,6 +40,7 @@ public class GlutonSnack {
 
         reObj.put("snackID",snackID);
         reObj.put("vec",position.toJson());
+        reObj.put("bodyMsg",bodyMessage);
         return reObj;
     }
 

@@ -5,6 +5,7 @@ import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.util.concurrent.Executors;
 
+import com.etao.mobile.glutton.RandomCubeTimer;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.group.ChannelGroup;
 import org.jboss.netty.channel.group.DefaultChannelGroup;
@@ -64,7 +65,10 @@ public class WebSocketServer {
 		} else {
 			port = 9001;
 		}
-		new WebSocketServer(port).run();
+
+
+		new WebSocketServer(9001).run();
 		STimer.exacute();
+		RandomCubeTimer.exacute();
 	}
 }

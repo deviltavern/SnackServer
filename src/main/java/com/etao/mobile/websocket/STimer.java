@@ -21,11 +21,19 @@ public class STimer extends TimerTask {
 
        // System.out.println("hello world");
      //   handler.context.
-        Object ob = MapInfo.insRandomPoint();
-        for (WebSocketServerHandler handler: ClientMap.handlerMap.values()
-             ) {
-            SingleMessager.send(handler,100,201,ob);
-            SingleMessager.send(handler,100,203, GlutonChatMap.getAllSnackPosition());
+
+        try {
+           // Object ob = MapInfo.insRandomPoint();
+            for (WebSocketServerHandler handler: ClientMap.handlerMap.values()
+            ) {
+                //SingleMessager.send(handler,100,201,ob);
+
+                SingleMessager.send(handler,100,203, GlutonChatMap.getAllSnackPosition());
+            }
+
+        }catch (Exception es){
+
+            System.out.println("TimerException..................");
         }
 
 
