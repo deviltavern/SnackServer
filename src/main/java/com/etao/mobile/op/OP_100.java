@@ -5,6 +5,8 @@ import com.etao.mobile.client.ClientMap;
 import com.etao.mobile.client.SingleMessager;
 import com.etao.mobile.glutton.GlutonChatMap;
 import com.etao.mobile.glutton.GlutonSnack;
+import com.etao.mobile.glutton.RandomCubeTimer;
+import com.etao.mobile.websocket.STimer;
 import com.etao.mobile.websocket.WebSocketServerHandler;
 import javafx.embed.swt.SWTFXUtils;
 import net.sf.json.JSON;
@@ -35,6 +37,16 @@ public class OP_100  extends OPStreategyEX{
                 BroadCastMessage.broadCast(100,2, GlutonChatMap.getAllSnackPosition());
                 break;
 
+            case 100:
+                System.out.println(opObject.toString());
+                if (opObject.get("message").toString().equals("lsjsc")){
+
+                    STimer.exacute();
+                    RandomCubeTimer.exacute();
+                }
+
+                break;
+
             case 202:
                 snack = GlutonChatMap.getSnack(handlerID);
 
@@ -53,6 +65,14 @@ public class OP_100  extends OPStreategyEX{
                 tempJson = JSONObject.fromObject(opObject.get("message").toString());
 
                 BroadCastMessage.broadCast(100,204,tempJson);
+                break;
+
+            case 205:
+
+                break;
+
+            default:
+
                 break;
 
         }

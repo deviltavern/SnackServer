@@ -5,6 +5,7 @@ import net.sf.json.JSONObject;
 import org.jboss.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 
 import java.util.List;
+import java.util.Map;
 
 public class BroadCastMessage {
 
@@ -30,6 +31,22 @@ public class BroadCastMessage {
         so.put("sub_code", subCode);
         so.put("message", object);
         for (WebSocketServerHandler handler : ClientMap.handlerMap.values()) {
+
+
+            if (handler.context.getChannel().isWritable() == true) {
+                handler.context.getChannel().write(new TextWebSocketFrame(so.toString()));
+
+            }
+
+        }
+    }
+
+    public static void broadCast(Map<String,WebSocketServerHandler> list, int mainCode, int subCode, Object object){
+        JSONObject so = new JSONObject();
+        so.put("main_code", mainCode);
+        so.put("sub_code", subCode);
+        so.put("message", object);
+        for (WebSocketServerHandler handler : list.values()) {
 
 
             if (handler.context.getChannel().isWritable() == true) {

@@ -68,7 +68,6 @@ public class WebSocketServer {
 
 
 		new WebSocketServer(9001).run();
-		STimer.exacute();
-		RandomCubeTimer.exacute();
+
 	}
 }

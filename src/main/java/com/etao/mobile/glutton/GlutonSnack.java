@@ -8,7 +8,7 @@ import net.sf.json.JSONObject;
 
 public class GlutonSnack {
 
-    WebSocketServerHandler handler;
+    public WebSocketServerHandler handler;
     Vector3 dir;
     Vector3 position;
     String snackID;

@@ -8,13 +8,12 @@ import static org.jboss.netty.handler.codec.http.HttpResponseStatus.NOT_FOUND;
 import static org.jboss.netty.handler.codec.http.HttpResponseStatus.OK;
 import static org.jboss.netty.handler.codec.http.HttpVersion.HTTP_1_1;
 
+import com.etao.mobile.client.BroadCastMessage;
 import com.etao.mobile.client.ClientMap;
 import com.etao.mobile.glutton.GlutonChatMap;
-import com.etao.mobile.op.OPStrategy;
-import com.etao.mobile.op.OP_0;
-import com.etao.mobile.op.OP_100;
-import com.etao.mobile.op.OP_101;
+import com.etao.mobile.op.*;
 import com.sun.org.apache.bcel.internal.generic.RET;
+import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.apache.log4j.Logger;
@@ -94,6 +93,14 @@ public class WebSocketServerHandler extends SimpleChannelUpstreamHandler {
 		log.error("关掉一个channel：" + ctx.getChannel().getId());
 		ClientMap.removeClient(this.ID);
         GlutonChatMap.removeSnack(this);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("user",ID);
+        GlutonChatMap.removeSnack(this);
+        BroadCastMessage.broadCast(100,233,jsonObject);
+
+        System.out.println("失去连接 +"+ID);
+
+        ctx.getChannel().close();
 
 	}
 
@@ -106,7 +113,7 @@ public class WebSocketServerHandler extends SimpleChannelUpstreamHandler {
             if (msg instanceof HttpRequest) {
 
                 HttpRequest rxq = (HttpRequest) msg;
-                System.out.println(rxq);
+               // System.out.println(rxq);
                 handleHttpRequest(ctx, rxq);
                 //handleWebSocketFrame(ctx,(WebSocketFrame)msg);
             } else if (msg instanceof WebSocketFrame) {
@@ -137,6 +144,10 @@ public class WebSocketServerHandler extends SimpleChannelUpstreamHandler {
                         case 101:
                             opStrategy = new OP_101(this);
                             break;
+
+                        case 102:
+                            opStrategy = new OP_102(this);
+                            break;
                         default:
                             break;
                     }
@@ -147,7 +158,7 @@ public class WebSocketServerHandler extends SimpleChannelUpstreamHandler {
 
                 }catch (Exception es){
 
-                    System.out.println("输出异常!");
+                    System.out.println(es);
 
 
                 }

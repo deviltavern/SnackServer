@@ -1,5 +1,6 @@
 package com.etao.mobile.glutton;
 
+import com.etao.mobile.websocket.STimer;
 import com.etao.mobile.websocket.WebSocketServer;
 import com.etao.mobile.websocket.WebSocketServerHandler;
 import com.sun.org.apache.bcel.internal.generic.RET;
@@ -62,5 +63,16 @@ public class GlutonChatMap {
         }
        // System.out.println(reobj.toString());
         return reobj;
+    }
+
+    public static boolean timeBegin = false;
+
+
+    public static void runTime(){
+
+        STimer.exacute();
+        RandomCubeTimer.exacute();
+
+
     }
 }
