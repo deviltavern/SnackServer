@@ -92,6 +92,9 @@ public class WebSocketServerHandler extends SimpleChannelUpstreamHandler {
 			ChannelStateEvent e) throws Exception {
 		log.error("关掉一个channel：" + ctx.getChannel().getId());
 		ClientMap.removeClient(this.ID);
+		//channel.currentWriteBuffer
+      // ctx.getChannel().
+        //ctx.getChannel().
         GlutonChatMap.removeSnack(this);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("user",ID);
@@ -101,6 +104,7 @@ public class WebSocketServerHandler extends SimpleChannelUpstreamHandler {
         System.out.println("失去连接 +"+ID);
 
         ctx.getChannel().close();
+        //WebSocketServer.fc.releaseExternalResources();
 
 	}
 

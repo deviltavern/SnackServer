@@ -40,11 +40,17 @@ public class WebSocketServer {
 		this.port = port;
 	}
 
+	public static NioServerSocketChannelFactory fc;
 	public void run() throws UnknownHostException {
 		// Configure the server.
+
+		 fc = 	new NioServerSocketChannelFactory(Executors
+				.newCachedThreadPool(), Executors.newCachedThreadPool());
+
+
 		ServerBootstrap bootstrap = new ServerBootstrap(
-				new NioServerSocketChannelFactory(Executors
-						.newCachedThreadPool(), Executors.newCachedThreadPool()));
+				fc
+			);
 
 		// Set up the event pipeline factory.
 		bootstrap.setPipelineFactory(new WebSocketServerPipelineFactory());
@@ -53,7 +59,8 @@ public class WebSocketServer {
 		// Bind and start to accept incoming connections.
 		//172.24.35.174
 
-		bootstrap.bind(new InetSocketAddress(InetAddress.getByName("172.24.35.174"),port));
+		//bootstrap.bind(new InetSocketAddress(InetAddress.getByName("172.24.35.174"),port));
+		bootstrap.bind(new InetSocketAddress(InetAddress.getByName("localhost"),port));
 
 		System.out.println("Web socket server started at port " + port + '.');
 		System.out.println("Open your browser and navigate to http://localhost:"
