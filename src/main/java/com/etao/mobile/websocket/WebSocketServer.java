@@ -51,7 +51,7 @@ public class WebSocketServer {
 
 		System.out.println(InetAddress.getLocalHost());
 		// Bind and start to accept incoming connections.
-		bootstrap.bind(new InetSocketAddress(port));
+		bootstrap.bind(new InetSocketAddress(InetAddress.getByName("39.106.188.64"),port));
 
 		System.out.println("Web socket server started at port " + port + '.');
 		System.out.println("Open your browser and navigate to http://localhost:"
