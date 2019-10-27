@@ -45,7 +45,7 @@ public class WebSocketServer {
 		// Configure the server.
 
 		 fc = 	new NioServerSocketChannelFactory(Executors
-				.newCachedThreadPool(), Executors.newCachedThreadPool());
+				.newCachedThreadPool(), Executors.newCachedThreadPool(),100);
 
 
 		ServerBootstrap bootstrap = new ServerBootstrap(
