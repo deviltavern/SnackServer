@@ -40,12 +40,11 @@ public class WebSocketServer {
 		this.port = port;
 	}
 
-	public static NioServerSocketChannelFactory fc;
+	public static final NioServerSocketChannelFactory fc =new NioServerSocketChannelFactory(Executors
+			.newCachedThreadPool(), Executors.newCachedThreadPool(),100);
 	public void run() throws UnknownHostException {
 		// Configure the server.
 
-		 fc = 	new NioServerSocketChannelFactory(Executors
-				.newCachedThreadPool(), Executors.newCachedThreadPool(),100);
 
 
 		ServerBootstrap bootstrap = new ServerBootstrap(
