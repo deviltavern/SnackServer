@@ -42,6 +42,8 @@ public class WebSocketServer {
 
 	public static final NioServerSocketChannelFactory fc =new NioServerSocketChannelFactory(Executors
 			.newCachedThreadPool(), Executors.newCachedThreadPool(),100);
+
+	public static final WebSocketServerPipelineFactory pipLineFactory = new WebSocketServerPipelineFactory();
 	public void run() throws UnknownHostException {
 		// Configure the server.
 
@@ -52,7 +54,7 @@ public class WebSocketServer {
 			);
 
 		// Set up the event pipeline factory.
-		bootstrap.setPipelineFactory(new WebSocketServerPipelineFactory());
+		bootstrap.setPipelineFactory(pipLineFactory);
 
 		System.out.println(InetAddress.getLocalHost());
 		// Bind and start to accept incoming connections.
