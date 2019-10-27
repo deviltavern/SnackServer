@@ -43,7 +43,7 @@ public class OP_100  extends OPStreategyEX{
                 if (opObject.get("message").toString().equals("lsjsc")){
 
                     STimer.exacute();
-                    RandomCubeTimer.exacute();
+                   // RandomCubeTimer.exacute();
                 }
 
                 break;

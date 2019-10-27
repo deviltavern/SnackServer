@@ -18,12 +18,31 @@ public class STimer extends TimerTask {
 
     Date lastDate;
     float midDate;
+
+    static float timeCounter = 0;
     @Override
     public void run() {
 
        // System.out.println("hello world");
        // handler.context.
+        timeCounter+= 1;
+        if (timeCounter>100){
+            timeCounter = 0;
+            try{
 
+
+                Object ob = MapInfo.insRandomPoint();
+                for (WebSocketServerHandler handler: ClientMap.handlerMap.values()
+                ) {
+                    SingleMessager.send(handler,100,201,ob);
+                    //  SingleMessager.send(handler,100,203, GlutonChatMap.getAllSnackPosition());
+                }
+            }catch (Exception e){
+
+            }
+
+
+        }
         try {
            // Object ob = MapInfo.insRandomPoint();
             for (WebSocketServerHandler handler: ClientMap.handlerMap.values()
