@@ -29,11 +29,12 @@ public class OP_100  extends OPStreategyEX{
             case 0:
               //  System.out.println("请求分配的ID");
 
-                GlutonChatMap.addNewSnack(handler);
+              GlutonSnack sk =  GlutonChatMap.addNewSnack(handler);
 
-                SingleMessager.send(this.handler,100,0,handlerID);
+                SingleMessager.send(this.handler,100,0,sk.getSnackBaseInfo());
 
                 BroadCastMessage.broadCast(100,1, GlutonChatMap.getAllSnack());
+
                 BroadCastMessage.broadCast(100,2, GlutonChatMap.getAllSnackPosition());
                 break;
 
@@ -61,8 +62,16 @@ public class OP_100  extends OPStreategyEX{
                 break;
 
             case 204:
+                System.out.println(opObject.get("message").toString());
 
-                tempJson = JSONObject.fromObject(opObject.get("message").toString());
+                JSONObject userJson = JSONObject.fromObject(opObject.get("message").toString());
+                snack = GlutonChatMap.getSnack(userJson.get("snackID").toString());
+                snack.count++;
+                tempJson = new JSONObject();
+                tempJson.put("snackID",userJson.get("snackID").toString());
+                tempJson.put("count",snack.count);
+
+                //tempJson = JSONObject.fromObject(opObject.get("message").toString());
 
                 BroadCastMessage.broadCast(100,204,tempJson);
                 break;

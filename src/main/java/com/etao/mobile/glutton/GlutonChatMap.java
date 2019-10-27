@@ -15,10 +15,12 @@ public class GlutonChatMap {
     public static HashMap<String,GlutonSnack> snackMap = new
             HashMap<String, GlutonSnack>();
 
-    public static void addNewSnack(WebSocketServerHandler han){
+    public static GlutonSnack addNewSnack(WebSocketServerHandler han){
 
         GlutonSnack snack = new GlutonSnack(han);
         snackMap.put(snack.snackID,snack);
+
+        return snack;
 
 
     }
@@ -44,7 +46,13 @@ public class GlutonChatMap {
 
         for (GlutonSnack jb :snackMap.values()){
 
-            reObj.put(index,jb.snackID);
+            JSONObject skObj = new JSONObject();
+            skObj.put("snackID",jb.snackID);
+            skObj.put("color",jb.color);
+            skObj.put("count",jb.count);
+
+            reObj.put(index,skObj);
+
             index++;
         }
 

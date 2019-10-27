@@ -4,15 +4,22 @@ import com.etao.mobile.templates.Vector3;
 import com.etao.mobile.websocket.WebSocketServer;
 import com.etao.mobile.websocket.WebSocketServerHandler;
 import com.sun.org.apache.bcel.internal.generic.NEW;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+
+import java.util.Random;
 
 public class GlutonSnack {
 
+    public static final Random random = new Random();
     public WebSocketServerHandler handler;
+
     Vector3 dir;
     Vector3 position;
     String snackID;
     String bodyMessage = "";
+    Vector3 color;
+   public int count;
     public GlutonSnack(WebSocketServerHandler han){
 
         System.out.println("构造的ID = "+han.ID);
@@ -20,6 +27,13 @@ public class GlutonSnack {
         position = new Vector3();
         dir = new Vector3();
         position = new Vector3();
+
+        color = new Vector3();
+        color.x =Math.abs(random.nextInt()%255);
+        color.y = Math.abs(random.nextInt()%255);
+        color.z = Math.abs(random.nextInt()%255);
+
+
 
     }
 
@@ -53,6 +67,17 @@ public class GlutonSnack {
         reObj.put("vec",position.toJson());
         reObj.put("bodyMsg",bodyMessage);
         return reObj;
+    }
+
+    public JSONObject getSnackBaseInfo(){
+        JSONObject skObj = new JSONObject();
+        skObj.put("snackID",this.snackID);
+        skObj.put("color",this.color);
+        skObj.put("count",this.count);
+
+
+        return skObj;
+
     }
 
 
