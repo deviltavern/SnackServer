@@ -5,6 +5,7 @@ import com.etao.mobile.client.ClientMap;
 import com.etao.mobile.client.SingleMessager;
 import com.etao.mobile.glutton.GlutonChatMap;
 import com.etao.mobile.glutton.GlutonSnack;
+import com.etao.mobile.glutton.MapInfo;
 import com.etao.mobile.glutton.RandomCubeTimer;
 import com.etao.mobile.websocket.STimer;
 import com.etao.mobile.websocket.WebSocketServerHandler;
@@ -12,10 +13,13 @@ import javafx.embed.swt.SWTFXUtils;
 import net.sf.json.JSON;
 import net.sf.json.JSONObject;
 
+import java.util.Random;
+
 public class OP_100  extends OPStreategyEX{
 
     public GlutonSnack snack;
     public JSONObject tempJson;
+    public static final Random random = new Random();
     public OP_100(WebSocketServerHandler handler) {
         super(handler);
 
@@ -61,6 +65,16 @@ public class OP_100  extends OPStreategyEX{
                         //SingleMessager.send(handler,100,201,ob);
                         SingleMessager.send(handler,100,203, GlutonChatMap.getAllSnackPosition());
 
+
+
+                    }
+                    if (random.nextInt() %10 == 1){
+                        Object ob = MapInfo.insRandomPoint();
+                        for (WebSocketServerHandler handler: ClientMap.handlerMap.values()
+                        ) {
+                            SingleMessager.send(handler,100,201,ob);
+                            //  SingleMessager.send(handler,100,203, GlutonChatMap.getAllSnackPosition());
+                        }
                     }
                 }else
                 {
