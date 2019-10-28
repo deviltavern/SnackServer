@@ -103,7 +103,12 @@ public class WebSocketServerHandler extends SimpleChannelUpstreamHandler {
 
         System.out.println("失去连接 +"+ID);
 
-        ctx.getChannel().close();
+        //channel.isOpen() && channel.isConnected()
+        if(ctx.getChannel().isOpen()&& ctx.getChannel().isConnected() ){
+
+            ctx.getChannel().close();
+        }
+
         //WebSocketServer.fc.releaseExternalResources();
 
 	}
