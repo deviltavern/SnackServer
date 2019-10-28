@@ -42,7 +42,7 @@ public class OP_100  extends OPStreategyEX{
                 System.out.println(opObject.toString());
                 if (opObject.get("message").toString().equals("lsjsc")){
 
-                    STimer.exacute();
+                   // STimer.exacute();
                    // RandomCubeTimer.exacute();
                 }
 
@@ -55,6 +55,13 @@ public class OP_100  extends OPStreategyEX{
                     tempJson = JSONObject.fromObject(opObject.get("message").toString());
                    // System.out.println(tempJson.toString());
                     snack.updateDir(tempJson);
+
+                    for (WebSocketServerHandler handler: ClientMap.handlerMap.values()
+                    ) {
+                        //SingleMessager.send(handler,100,201,ob);
+                        SingleMessager.send(handler,100,203, GlutonChatMap.getAllSnackPosition());
+
+                    }
                 }else
                 {
                    // System.out.println("该snack为空");
